@@ -50,16 +50,16 @@ function Board({ currentState, setCurrentState }) {
     clearAllValidCells();
     onDragEnd(draggedElement);
 
-    const options = {
-      from: draggedElement.parentNode,
-      to: e.target,
-      currentState,
-      onSuccess: (newState) => {
-        setCurrentState(newState);
-      },
-    };
-
     if (draggedElement && isCellTarget(e.target)) {
+      const options = {
+        from: draggedElement.parentNode,
+        to: e.target,
+        currentState,
+        onSuccess: (newState) => {
+          setCurrentState(newState);
+        },
+      };
+
       findAllValidClaims(currentState).length > 0
         ? tryMakeClaim(options)
         : tryMakeMove(options);
