@@ -5,91 +5,38 @@ import {
   COMPUTER_PLAYER,
 } from "./constants";
 
+const players = [COMPUTER_PLAYER, HUMAN_PLAYER];
+
+const createRow = (size, isEven, player) => {
+  return Array.apply(null, Array(size)).map((x, i) => {
+    const isPlayer = isEven ? i % 2 > 0 : i % 2 === 0;
+
+    return { piece: isPlayer ? player : null };
+  });
+};
+
+const getPlayerForRow = (count) => {
+  if (count < 3) {
+    return players[0];
+  }
+
+  if (count > 4) {
+    return players[1];
+  }
+
+  return null;
+};
+
+const createBoard = (size) => {
+  return Array.apply(null, Array(size)).map((x, i) => {
+    return createRow(size, i % 2, getPlayerForRow(i));
+  });
+};
+
 const initialState = {
-  turn: HUMAN_PLAYER,
-  players: [COMPUTER_PLAYER, HUMAN_PLAYER],
-  board: [
-    [
-      { piece: COMPUTER_PLAYER },
-      { piece: null },
-      { piece: COMPUTER_PLAYER },
-      { piece: null },
-      { piece: COMPUTER_PLAYER },
-      { piece: null },
-      { piece: COMPUTER_PLAYER },
-      { piece: null },
-    ],
-    [
-      { piece: null },
-      { piece: COMPUTER_PLAYER },
-      { piece: null },
-      { piece: COMPUTER_PLAYER },
-      { piece: null },
-      { piece: COMPUTER_PLAYER },
-      { piece: null },
-      { piece: COMPUTER_PLAYER },
-    ],
-    [
-      { piece: COMPUTER_PLAYER },
-      { piece: null },
-      { piece: COMPUTER_PLAYER },
-      { piece: null },
-      { piece: COMPUTER_PLAYER },
-      { piece: null },
-      { piece: COMPUTER_PLAYER },
-      { piece: null },
-    ],
-    [
-      { piece: null },
-      { piece: null },
-      { piece: null },
-      { piece: null },
-      { piece: null },
-      { piece: null },
-      { piece: null },
-      { piece: null },
-    ],
-    [
-      { piece: null },
-      { piece: null },
-      { piece: null },
-      { piece: null },
-      { piece: null },
-      { piece: null },
-      { piece: null },
-      { piece: null },
-    ],
-    [
-      { piece: null },
-      { piece: HUMAN_PLAYER },
-      { piece: null },
-      { piece: HUMAN_PLAYER },
-      { piece: null },
-      { piece: HUMAN_PLAYER },
-      { piece: null },
-      { piece: HUMAN_PLAYER },
-    ],
-    [
-      { piece: HUMAN_PLAYER },
-      { piece: null },
-      { piece: HUMAN_PLAYER },
-      { piece: null },
-      { piece: HUMAN_PLAYER },
-      { piece: null },
-      { piece: HUMAN_PLAYER },
-      { piece: null },
-    ],
-    [
-      { piece: null },
-      { piece: HUMAN_PLAYER },
-      { piece: null },
-      { piece: HUMAN_PLAYER },
-      { piece: null },
-      { piece: HUMAN_PLAYER },
-      { piece: null },
-      { piece: HUMAN_PLAYER },
-    ],
-  ],
+  turn: players[1],
+  players,
+  board: createBoard(8),
 };
 
 const getStoredItem = (key) => {
