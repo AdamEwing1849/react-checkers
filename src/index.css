@@ -11,3 +11,82 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.board {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  width: 500px;
+  height: 500px;
+  border: 1px solid black;
+  margin: auto;
+}
+
+.cell {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid black;
+  width: calc(100% / 8 - 2px);
+  height: calc(100% / 8 - 2px);
+}
+
+.cell-valid-move {
+  border: 1px solid green;
+  box-shadow: inset 0px 0px 60px green;
+}
+
+.cell-valid-claim {
+  border: 1px solid red;
+  box-shadow: inset 0px 0px 60px red;
+}
+
+.cell-available-claim {
+  border: 1px solid yellow;
+  box-shadow: inset 0px 0px 60px yellow;
+}
+
+.dark {
+  background-color: #8B4513;
+}
+
+.light {
+  background-color: #FFFFE0;
+}
+
+.piece {
+  width: 80%;
+  height: 80%;
+  background-repeat: no-repeat;
+  background-size: 80%;
+  background-position: center;
+  border-radius: 50%;
+  border: 1px solid gray;
+}
+
+.piece-dark {
+  background-color: #000000;
+}
+
+.piece-light {
+  background-color: #FFFFFF;
+}
+
+.stats {
+  text-align: center;
+}
+
+.game-over {
+  font-weight: bold;
+  color: red;
+}
+
+.controls {
+  text-align: center;
+  margin: 15px;
+}
+
+.controls button {
+  margin: 0 10px;
+}

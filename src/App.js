@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Stats from "./components/Stats";
+import Board from "./components/Board";
+import Controls from "./components/Controls";
+import constants from "./services/constants";
+import state from "./services/state";
 
 function App() {
+  const [currentState, setCurrentState] = useState(state.get());
+  const hasPrevState = !!state.getPrevious();
+
+  const setAndSaveState = (newState) => {
+    if (currentState.turn === constants.HUMAN_PLAYER) {
+      state.setPrevious(currentState);
+    }
+
+    state.set(newState);
+    setCurrentState(newState);
+  };
+
+  const startNewGame = () => {
+    state.clearAll();
+    setCurrentState(state.get());
+  };
+
+  const undoLastMove = () => {
+    setAndSaveState(state.getPrevious());
+    state.clearPrevious();
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Stats
+        currentState={currentState}
+        cellsWithPieces={state.getCellsWithPieces(currentState)}
+      />
+      <Controls
+        startNewGame={startNewGame}
+        undoLastMove={undoLastMove}
+        hasPrevState={hasPrevState}
+      />
+      <Board currentState={currentState} setCurrentState={setAndSaveState} />
+    </>
   );
 }
 
