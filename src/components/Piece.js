@@ -42,6 +42,7 @@ function Piece({ piece, isKing, isCurrentPieceDragged, currentState }) {
       } ${isKing ? KING_CLASS_NAME : ""}`}
       onMouseEnter={onMouseOver}
       onMouseOver={onMouseOver}
+      onMouseMove={onMouseOver}
       onMouseOut={onMouseLeave}
       onMouseLeave={onMouseLeave}
     ></div>
