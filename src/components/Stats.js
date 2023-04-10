@@ -8,7 +8,7 @@ function Stats({ currentState, cellsWithPieces }) {
   const isGameOver = validClaims.length === 0 && validMoves.length === 0;
 
   return (
-    <div className="stats">
+    <div className="stats" data-testid="stats">
       {isGameOver ? (
         <p>
           <span className="game-over">GAME OVER!</span>

@@ -86,6 +86,7 @@ function Board({ currentState, setCurrentState }) {
   return (
     <div
       className="board"
+      data-testid="board"
       onMouseDown={onMouseDown}
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
