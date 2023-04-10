@@ -24,6 +24,7 @@ const Cell = ({
       {cell.piece && (
         <Piece
           piece={cell.piece}
+          isKing={cell.isKing}
           isCurrentPieceDragged={isCurrentPieceDragged}
           currentState={currentState}
         />

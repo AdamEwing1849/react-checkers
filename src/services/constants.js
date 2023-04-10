@@ -1,4 +1,5 @@
 export const PIECE_CLASS_NAME = "piece";
+export const KING_CLASS_NAME = "king";
 export const CELL_CLASS_NAME = "cell";
 export const CELL_VALID_MOVE = "cell-valid-move";
 export const CELL_VALID_CLAIM = "cell-valid-claim";
@@ -11,6 +12,7 @@ export const COMPUTER_TURN_DELAY = 1000; // in ms
 
 const constants = {
   PIECE_CLASS_NAME,
+  KING_CLASS_NAME,
   CELL_CLASS_NAME,
   CELL_VALID_MOVE,
   CELL_VALID_CLAIM,

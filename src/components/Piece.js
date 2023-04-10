@@ -10,9 +10,9 @@ import {
   clearAllValidCells,
   highlightAllAvailableClaimCells,
 } from "../services/hints";
-import { PIECE_CLASS_NAME } from "../services/constants";
+import { PIECE_CLASS_NAME, KING_CLASS_NAME } from "../services/constants";
 
-function Piece({ piece, isCurrentPieceDragged, currentState }) {
+function Piece({ piece, isKing, isCurrentPieceDragged, currentState }) {
   const onMouseOver = (event) => {
     const el = event.target.parentNode;
     const allValidClaims = findAllValidClaims(currentState);
@@ -39,7 +39,7 @@ function Piece({ piece, isCurrentPieceDragged, currentState }) {
     <div
       className={`${PIECE_CLASS_NAME} ${PIECE_CLASS_NAME}-${
         piece ? piece : ""
-      }`}
+      } ${isKing ? KING_CLASS_NAME : ""}`}
       onMouseEnter={onMouseOver}
       onMouseOver={onMouseOver}
       onMouseOut={onMouseLeave}

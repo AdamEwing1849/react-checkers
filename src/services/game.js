@@ -1,4 +1,4 @@
-import { HUMAN_PLAYER } from "./constants";
+import { COMPUTER_PLAYER } from "./constants";
 
 const getPosition = (el) => {
   return { row: Number(el.dataset.row), col: Number(el.dataset.col) };
@@ -21,9 +21,13 @@ const isValidMove = (
   { board, turn }
 ) => {
   // Normal 1-length diagonal move
+  const allowedMoveLength = board[fR][fC].isKing
+    ? [-1, 1]
+    : [turn === COMPUTER_PLAYER ? 1 : -1];
+
   if (
     board[fR][fC].piece === turn && // Piece belongs to current player
-    tR - fR === (turn === HUMAN_PLAYER ? -1 : 1) && // First part of 1-length diagonal check (-1 or +1 depending on player)
+    allowedMoveLength.includes(tR - fR) && // First part of 1-length diagonal check (-1 or +1 depending on player)
     Math.abs(tC - fC) === 1 && // Second part of 1-length diagonal check
     !board[tR][tC].piece // Check if a cell is NOT occupied
   ) {
@@ -131,16 +135,21 @@ export const findAllValidClaims = ({ board, turn }) => {
   return validMoves;
 };
 
+const checkIsNewKing = (position, turn) => {
+  return turn === COMPUTER_PLAYER ? position.row === 7 : position.row === 0;
+};
+
 const movePiece = (from, to, currentState, onSuccess) => {
   const fromPos = from.hasOwnProperty("row") ? from : getPosition(from);
   const toPos = to.hasOwnProperty("row") ? to : getPosition(to);
-  const { piece } = currentState.board[fromPos.row][fromPos.col];
+  const { piece, isKing } = currentState.board[fromPos.row][fromPos.col];
+  const isNewKing = checkIsNewKing(toPos, currentState.turn);
   const newBoard = currentState.board.map((row, rowIndex) => {
     return row.map((cell, cellIndex) => {
       if (rowIndex === fromPos.row && cellIndex === fromPos.col) {
         return { ...cell, piece: null };
       } else if (rowIndex === toPos.row && cellIndex === toPos.col) {
-        return { ...cell, piece };
+        return { ...cell, piece, isKing: isKing || isNewKing };
       } else {
         return cell;
       }
@@ -157,8 +166,8 @@ const movePiece = (from, to, currentState, onSuccess) => {
 const moveAndRemovePiece = (from, to, currentState, onSuccess) => {
   const fromPos = from.hasOwnProperty("row") ? from : getPosition(from);
   const toPos = to.hasOwnProperty("row") ? to : getPosition(to);
-
-  const { piece } = currentState.board[fromPos.row][fromPos.col];
+  const { piece, isKing } = currentState.board[fromPos.row][fromPos.col];
+  const isNewKing = checkIsNewKing(toPos, currentState.turn);
   const middlePos = {
     row: (fromPos.row + toPos.row) / 2,
     col: (fromPos.col + toPos.col) / 2,
@@ -168,7 +177,7 @@ const moveAndRemovePiece = (from, to, currentState, onSuccess) => {
       if (rowIndex === fromPos.row && cellIndex === fromPos.col) {
         return { ...cell, piece: null };
       } else if (rowIndex === toPos.row && cellIndex === toPos.col) {
-        return { ...cell, piece };
+        return { ...cell, piece, isKing: isKing || isNewKing };
       } else if (rowIndex === middlePos.row && cellIndex === middlePos.col) {
         return { ...cell, piece: null };
       } else {
