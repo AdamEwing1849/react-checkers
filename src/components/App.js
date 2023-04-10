@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Stats from "./components/Stats";
-import Board from "./components/Board";
-import Controls from "./components/Controls";
-import constants from "./services/constants";
-import state from "./services/state";
+import Stats from "./Stats";
+import Board from "./Board";
+import Controls from "./Controls";
+import constants from "../services/constants";
+import state from "../services/state";
 
 function App() {
   const [currentState, setCurrentState] = useState(state.get());
